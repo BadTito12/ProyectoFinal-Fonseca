@@ -1,0 +1,60 @@
+body {
+  font-family: 'Arial', Helvetica, sans-serif;
+  background-color: transparent; /* Fondo animado ocupa todo el fondo */
+  margin: 2rem;
+  position: relative;
+  z-index: 0;
+}
+
+.container, #carrito {
+  position: relative;
+  z-index: 1; /* Para que el contenido esté encima del fondo */
+}
+
+h1 {
+  color: white !important;
+  background-color: #b30000;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(179, 0, 0, 0.5);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#productos .card {
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#productos .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(179, 0, 0, 0.3);
+}
+
+#carrito {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+#carrito h3 {
+  border-bottom: 2px solid #b30000;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#carrito button.btn-sm.btn-danger {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+#carrito button.btn-success {
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+p {
+  margin: 0;
+}

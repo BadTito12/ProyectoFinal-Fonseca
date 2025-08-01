@@ -1,0 +1,18 @@
+[ 
+    { "id": 1, "nombre": "Pizza", "precio": 2500 },
+    { "id": 2, "nombre": "Hamburguesa", "precio": 1800 },
+    { "id": 3, "nombre": "Empanada", "precio": 1000},
+    {"id": 4, "nombre": "Milanesa con fritas", "precio": 3560},
+    {"id": 5, "nombre": "Rabas", "precio": 9000},
+    {"id": 6, "nombre": "Bondiola al plato", "precio": 8730},
+    {"id": 7, "nombre": "Pollo con fritas", "precio": 10000},
+    {"id": 8, "nombre": "Bebida", "precio": 1500},
+    {"id": 9, "nombre": "Espresso", "precio": 1800},
+    {"id": 10, "nombre": "Capucchino", "precio": 2600},
+    {"id": 11, "nombre": "Latte", "precio": 2000},
+    {"id": 12, "nombre": "Adicional Leche vegetal", "precio": 900},
+    {"id": 13, "nombre": "Postre", "precio": 2700},
+    {"id": 14, "nombre": "Helado", "precio": 1750},
+    {"id": 15, "nombre": "Cookie", "precio": 3200}
+    
+]
