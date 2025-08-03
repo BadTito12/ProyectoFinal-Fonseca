@@ -1,35 +1,34 @@
 // Clase Producto
 class Producto {
-  constructor(id, nombre, precio) {
+  constructor(id, nombre, precio, icono) {
     this.id = id;
     this.nombre = nombre;
     this.precio = precio;
+    this.icono = icono;
   }
 }
 
-// Productos disponibles
+// Lista de productos disponibles
 const productoDisponibles = [
-  new Producto(1, "Pizza", 2500),
-  new Producto(2, "Hamburguesa", 1800),
-  new Producto(3, "Empanada", 1000),
-  new Producto(4, "Milanesa con fritas", 3560),
-  new Producto(5, "Rabas", 9000),
-  new Producto(6, "Bondiola al plato", 8730),
-  new Producto(7, "Pollo con fritas", 10000),
-  new Producto(8, "Bebida", 1500),
-  new Producto(9, "Espresso", 1800),
-  new Producto(10, "Capuchino", 2600),
-  new Producto(11, "Latte", 2000),
-  new Producto(12, "Adicional Leche vegetal", 900),
-  new Producto(13, "Postre", 2700),
-  new Producto(14, "Helado", 1750),
-  new Producto(15, "Cookie", 3200),
+  new Producto(1, "Pizza", 2500, "fa-pizza-slice"),
+  new Producto(2, "Hamburguesa", 1800, "fa-burger"),
+  new Producto(3, "Empanada", 1000, "fa-utensils"),
+  new Producto(4, "Milanesa con fritas", 3560, "fa-drumstick-bite"),
+  new Producto(5, "Rabas", 9000, "fa-fish"),
+  new Producto(6, "Bondiola al plato", 8730, "fa-bacon"),
+  new Producto(7, "Pollo con fritas", 10000, "fa-drumstick-bite"),
+  new Producto(8, "Bebida", 1500, "fa-wine-glass"),
+  new Producto(9, "Espresso", 1800, "fa-mug-hot"),
+  new Producto(10, "Capuchino", 2600, "fa-mug-saucer"),
+  new Producto(11, "Latte", 2000, "fa-coffee"),
+  new Producto(12, "Leche vegetal", 900, "fa-seedling"),
+  new Producto(13, "Postre", 2700, "fa-ice-cream"),
+  new Producto(14, "Helado", 1750, "fa-ice-cream"),
+  new Producto(15, "Cookie", 3200, "fa-cookie"),
 ];
 
-// Carrito con productos y cantidades
 let carrito = [];
 
-// Agregar producto al carrito
 function agregarAlCarrito(id) {
   const producto = productoDisponibles.find((p) => p.id === id);
   if (producto) {
@@ -43,7 +42,6 @@ function agregarAlCarrito(id) {
   }
 }
 
-// Quitar producto del carrito (disminuir cantidad o eliminar)
 function quitarDelCarrito(id) {
   const index = carrito.findIndex((item) => item.producto.id === id);
   if (index !== -1) {
@@ -56,7 +54,6 @@ function quitarDelCarrito(id) {
   }
 }
 
-// Mostrar productos disponibles en el DOM
 function mostrarProductos() {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -66,8 +63,9 @@ function mostrarProductos() {
     div.className = "col-md-4 mb-4";
 
     div.innerHTML = `
-      <div class="card h-100">
+      <div class="card h-100 text-center">
         <div class="card-body d-flex flex-column">
+          <i class="fa-solid ${producto.icono} fa-3x mb-3" style="color:#dc3545;"></i>
           <h5 class="card-title">${producto.nombre}</h5>
           <p class="card-text">$${producto.precio}</p>
           <button class="btn btn-primary mt-auto" onclick="agregarAlCarrito(${producto.id})">Agregar</button>
@@ -78,7 +76,6 @@ function mostrarProductos() {
   });
 }
 
-// Renderizar carrito con cantidades y total actualizado
 function renderizarCarrito() {
   const contenedor = document.getElementById("carrito");
   contenedor.innerHTML = "<h3>Carrito</h3>";
@@ -121,7 +118,6 @@ function renderizarCarrito() {
   contenedor.appendChild(finalizarBtn);
 }
 
-// Finalizar compra mostrando factura y método de pago
 function finalizarCompra(total) {
   if (carrito.length === 0) {
     Swal.fire({
@@ -155,7 +151,6 @@ function finalizarCompra(total) {
   });
 }
 
-// Elegir método de pago con SweetAlert2
 function elegirMetodoPago(total) {
   Swal.fire({
     title: "Seleccioná un método de pago",
@@ -174,17 +169,41 @@ function elegirMetodoPago(total) {
   }).then((result) => {
     if (result.isConfirmed) {
       const metodo = result.value;
-      Swal.fire({
-        title: "Pago realizado",
-        text: `Pagaste $${total} con ${metodo}. ¡Gracias por tu compra!`,
-        icon: "success",
-      });
-      carrito = [];
-      renderizarCarrito();
+
+      const pagosConLector = ["credito", "debito", "mercadopago"];
+
+      if (pagosConLector.includes(metodo)) {
+        Swal.fire({
+          title: "Acercá tu tarjeta al lector...",
+          timer: 8000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          willClose: () => {
+            Swal.fire({
+              title: "Pago exitoso",
+              text: `Pagaste $${total} con ${metodo}. ¡Gracias por tu compra!`,
+              icon: "success",
+              confirmButtonText: "Aceptar",
+            });
+            carrito = [];
+            renderizarCarrito();
+          },
+        });
+      } else {
+        Swal.fire({
+          title: "Pago realizado",
+          text: `Pagaste $${total} con ${metodo}. ¡Gracias por tu compra!`,
+          icon: "success",
+          confirmButtonText: "Aceptar",
+        });
+        carrito = [];
+        renderizarCarrito();
+      }
     }
   });
 }
 
-// Al cargar la página
 mostrarProductos();
 renderizarCarrito();
